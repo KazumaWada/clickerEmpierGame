@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--bootstrap-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>clickerEmpierGame</title>
+</head>
+<style>
+       body{
+            margin: 0;
+            font-family: Futura!important;
+            letter-spacing: 0.03em!important;
+        }
+        @media (min-width:600px){
+            .flowHeight{
+                height: 80%!important;
+            }
+        }
+</style>
+<body>
+    <div id="mainContainer" class="bg-dark p-5">
+        <!-- login-page -->
+        <div id ="newAndLoginContainer" class="bg-white text-center p-4">
+            <h2 class="pb-3">Clicker Empire Game</h2>
+            <form>
+                <div class="form-row pb-3">
+                    <div class="col">
+                        <input id="userNameInput" name="userName" type="text" class="form-control" placeholder="Your name">
+                    </div>
+                </div>
+            </form>
+            <div id="btnContainer" class="d-flex justify-content-between">
+                <div class="col-6 pl-0">
+                    <button onclick="newUserAction()" type="submit" class="btn btn-primary col-12" id="newGame">New</button>
+                </div>
+                <div class="col-6 pr-0">
+                    <button onclick="loginAction()" type="submit" class="btn btn-primary col-12" id="login">Login</button>
+                </div>
+            </div>
+        </div>
+        <!-- mainページ -->
+        <div id="mainPageDiv">
+
+        </div>
+    </div>
+</body>
+<script>
+const config = {
+mainContainer: document.getElementById("mainContainer"),
+newAndLoginContainer: document.getElementById("newAndLoginContainer"),
+btnContainer: document.getElementById("btnContainer"),
+mainPageDiv: document.getElementById("mainPageDiv"),
+burger: document.getElementById("burger"),
+burgerIndex: 1,
+};
+//d-none,d-block
+
+//userClass
+class User{
+    //loginかnewをclickした瞬間にこれらが作られるようにする。
+    constructor(name,age,days,money,click){
+        this.name = name;
+        this.age = age;
+        this.days = days;
+        this.money = money;
+        this.click = click;
+    }
+}
+//new,login
+function newUserAction(){
+    config.btnContainer.querySelectorAll("#newGame")[0].addEventListener("click", function(){
+        if(config.newAndLoginContainer.querySelectorAll("input")[0].value == ""){
+        alert("please put your name");
+        }
+        else{
+            config.newAndLoginContainer.classList.add("d-none");
+            let newUser = new User(config.newAndLoginContainer.querySelectorAll("input")[0].value,
+            20,0,50000,0);
+            mainPage(newUser);
+        }
+    })
+}
+
+function loginAction(){
+    config.btnContainer.querySelectorAll("#login")[0].addEventListener("click", function(){
+        if(config.newAndLoginContainer.querySelectorAll("input")[0].value == "")
+        alert("please put your name");
+        else if("there is no data")alert("no data");
+        else alert("show new page");
+        
+
+    })
+}
+
+/////////////////////////////////////mainPage/////////////////////////////////////////////////
+function mainPage(newUser){
+    config.mainPageDiv.innerHTML = 
+    `
+    <div class="container">
+                <div class="row">
+                <!-- left -->
+                <div class="col-4 text-center text-white"> 
+                    <h3 id="burgerQuantity">${burgerClicked(newUser.click)} Burgers</h3>
+                    <p>one click  25yen</p>
+                    <div class="p-2 pt-5 d-flex justify-content-center" onclick="burgerClicked()">
+                        <img src="https://cdn.pixabay.com/photo/2014/04/02/17/00/burger-307648_960_720.png" width=80% class="py-2 hover img-fuid" id="burger">
+                    </div>  
+                </div>
+                <!-- right -->
+                <div class="col-8">
+                    <div class="d-flex flex-wrap p-1">
+                    <div class="text-white text-center col-12 col-sm-6 InfoBorder">
+                        <p>${newUser.name}</p>
+                    </div>
+                    <div class="text-white text-center col-12 col-sm-6 InfoBorder">
+                        <p>${newUser.age} years old</p>
+                    </div>
+                    <div class="text-white text-center col-12 col-sm-6 userInfoBorder">
+                        <p>${newUser.days} days</p>
+                    </div>
+                    <div class="text-white text-center col-12 col-sm-6 userInfoBorder">
+                        <p>￥${newUser.money}</p>
+                    </div>
+                    </div>
+                   
+                </div>
+                </div>
+            </div>
+    `
+    ;
+}
+//burgerClicked
+function burgerClicked(clickedIndex){
+    clickedIndex = 1;
+    return clickedIndex;
+// if(clickedIndex == 0){
+//     clickedIndex = 1;
+// }
+// let burgerQuantity = document.getElementById("burgerQuantity");
+// console.log(burgerQuantity.innerHTML);
+// clickedIndex = clickedIndex + 1;
+// burgerQuantity.innerHTML =clickedIndex  + "Burgers";
+}
+
+
+</script>
+</html>
