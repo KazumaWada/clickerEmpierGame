@@ -43,18 +43,32 @@
         </div>
         <!-- mainページ -->
         <div id="mainPageDiv">
-
+            <div class="container">
+                <div id="mainPageRow" class="row">
+                    <!-- left -->
+                    <div id="mainPageLeft" class="col-4 text-center text-white"> 
+                    </div>
+                  <!-- right -->
+                  <div id="mainPageRight" class="col-8">
+                  </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
 <script>
+//staticについて。
+//どういう構造になってるか把握してない時点で、staticでまとめるのは難しい。
+//まずは書いてみてそこから。staticでまとめる事にしよう。
 const config = {
 mainContainer: document.getElementById("mainContainer"),
 newAndLoginContainer: document.getElementById("newAndLoginContainer"),
 btnContainer: document.getElementById("btnContainer"),
 mainPageDiv: document.getElementById("mainPageDiv"),
-burger: document.getElementById("burger"),
-burgerIndex: 1,
+// burger: document.getElementById("burger"),
+mainPageRow: document.getElementById("mainPageRow"),
+mainPageLeft: document.getElementById("mainPageLeft"),
+mainPageRight: document.getElementById("mainPageRight"),
 };
 //d-none,d-block
 
@@ -79,7 +93,10 @@ function newUserAction(){
             config.newAndLoginContainer.classList.add("d-none");
             let newUser = new User(config.newAndLoginContainer.querySelectorAll("input")[0].value,
             20,0,50000,0);
-            mainPage(newUser);
+            mainPageRight(newUser);
+            mainPageLeft(newUser);
+            //startTimer(newUser.days);
+            //startTimer(newUser.days);
         }
     })
 }
@@ -96,54 +113,63 @@ function loginAction(){
 }
 
 /////////////////////////////////////mainPage/////////////////////////////////////////////////
-function mainPage(newUser){
-    config.mainPageDiv.innerHTML = 
+function mainPageLeft(user){
+    config.mainPageLeft.innerHTML = 
     `
-    <div class="container">
-                <div class="row">
-                <!-- left -->
-                <div class="col-4 text-center text-white"> 
-                    <h3 id="burgerQuantity">${burgerClicked(newUser.click)} Burgers</h3>
+    <h3 id="burgerQuantity">${user.click} Burgers</h3>
                     <p>one click  25yen</p>
-                    <div class="p-2 pt-5 d-flex justify-content-center" onclick="burgerClicked()">
-                        <img src="https://cdn.pixabay.com/photo/2014/04/02/17/00/burger-307648_960_720.png" width=80% class="py-2 hover img-fuid" id="burger">
+                    <div class="p-2 pt-5 d-flex justify-content-center" id="burger">
+                        <img src="https://cdn.pixabay.com/photo/2014/04/02/17/00/burger-307648_960_720.png" width=80% class="py-2 hover img-fuid">
                     </div>  
-                </div>
-                <!-- right -->
-                <div class="col-8">
+    `
+     ;
+    //burgerClicked()で括弧をつけて渡すと、処理が一回で終わってしまう。
+    const burger = document.getElementById("burger");
+    burger.addEventListener("click", function (){
+        burgerClicked(user);
+    });
+};
+
+function burgerClicked(user){
+    user.click++;
+    mainPageLeft(user);
+}
+
+function mainPageRight(user){
+    config.mainPageRight.innerHTML = 
+    `
                     <div class="d-flex flex-wrap p-1">
                     <div class="text-white text-center col-12 col-sm-6 InfoBorder">
-                        <p>${newUser.name}</p>
+                        <p>${user.name}</p>
                     </div>
                     <div class="text-white text-center col-12 col-sm-6 InfoBorder">
-                        <p>${newUser.age} years old</p>
+                        <p>${user.age} years old</p>
                     </div>
                     <div class="text-white text-center col-12 col-sm-6 userInfoBorder">
-                        <p>${newUser.days} days</p>
+                        <p>${user.days} days</p>
                     </div>
                     <div class="text-white text-center col-12 col-sm-6 userInfoBorder">
-                        <p>￥${newUser.money}</p>
+                        <p>￥${user.money}</p>
                     </div>
-                    </div>
-                   
-                </div>
-                </div>
-            </div>
+                    </div>   
     `
     ;
 }
-//burgerClicked
-function burgerClicked(clickedIndex){
-    clickedIndex = 1;
-    return clickedIndex;
-// if(clickedIndex == 0){
-//     clickedIndex = 1;
-// }
-// let burgerQuantity = document.getElementById("burgerQuantity");
-// console.log(burgerQuantity.innerHTML);
-// clickedIndex = clickedIndex + 1;
-// burgerQuantity.innerHTML =clickedIndex  + "Burgers";
+
+function startTimer(days){
+setInterval(function(){
+    days++;
+},1000);
 }
+
+    
+
+//burgerClicked
+// function burgerClicked(click){
+// if(config.burger)
+// }
+
+//config.burger.addEventListener("click", burgerClicked());
 
 
 </script>
