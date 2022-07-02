@@ -24,31 +24,13 @@
 </style>
 <body>
     <div id="mainContainer" class="bg-dark p-5">
+
         <div id="initialPage">
-             <!-- login-page -->
-        <!-- <div id ="newAndLoginContainer" class="bg-white text-center p-4">
-            <h2 class="pb-3">Clicker Empire Game</h2>
-            <form>
-                <div class="form-row pb-3">
-                    <div class="col">
-                        <input id="userNameInput" name="userName" type="text" class="form-control" placeholder="Your name">
-                    </div>
-                </div>
-            </form>
-            <div id="btnContainer" class="d-flex justify-content-between">
-                <div class="col-6 pl-0">
-                    <button onclick="Controller.newUserAction()" type="submit" class="btn btn-primary col-12" id="newGame">New</button>
-                </div>
-                <div class="col-6 pr-0">
-                    <button onclick="loginAction()" type="submit" class="btn btn-primary col-12" id="login">Login</button>
-                </div>
-            </div>
-        </div> -->
         </div>
        
         <div id="mainPageDiv">
-
         </div> 
+
         </div>
     </div>
 </body>
@@ -437,8 +419,14 @@ static saveAllData(user){
     config.initialPage.classList.remove("d-none");
     //loginページのinputを空にする
     config.initialPage.querySelectorAll("input")[0].value = "";
+}
 
-
+static timer(){
+    let c = 1;
+setInterval(function(){
+    //console.log("Running statements every second." + c);
+    c++;
+},1000)
 }
 
 
